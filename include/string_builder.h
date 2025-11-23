@@ -3,9 +3,10 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdarg.h>
 
 /* struct for build strings */
-typedef struct string_builder {
+typedef struct strbld_t {
     char* string;
     size_t capacity;
     size_t len;
@@ -23,11 +24,35 @@ strbld_t *strbld_new(size_t capacity);
  */
 char *strbld_bld(strbld_t *bldr);
 
+/* 
+  Append string to back of strbld.
+  Return is successful.
+ */
+bool strbld_append(strbld_t* bld, char* target);
+
+/* 
+  Append string to back of strbld.
+  Return is successful.
+ */
+bool strbld_appendf(strbld_t* bld, char* format, ...);
+
+/* 
+  Append char to back of strbld_t.
+  Return is successful.
+ */
+bool strbld_push(strbld_t* bld, char target);
+
 /*
   Insert string to string builder with index.
   Return is successful.
  */
-bool strbld_insert(strbld_t *bldr, size_t index, const char *target);
+bool strbld_insert(strbld_t *bldr, size_t index, char *target);
+
+/*
+  Insert string to string builder with index and format.
+  Return is successful.
+ */
+bool strbld_insertf(strbld_t* bldr, size_t index, char* format, ...);
 
 /*
   Remove range string in string builder.
