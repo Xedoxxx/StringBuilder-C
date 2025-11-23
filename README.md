@@ -1,8 +1,17 @@
 # StringBuilder-C
-> Project only for learning C programming language.
 
-My string builder implementation for C.
+> Project using only for learning CMake and C programming language.
 
-# Using
+StringBuilder implementation on C.
 
-See [main.c](src/main.c) for example.
+# Testing
+Use for testing:
+```bash
+mkdir build
+cd build
+
+cmake ..
+make
+
+ctest -V
+```
