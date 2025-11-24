@@ -19,6 +19,30 @@ typedef struct strbld_t {
 strbld_t *strbld_new(size_t capacity);
 
 /*
+  Get char by index in string builder.
+  Return char by index.
+ */
+char strbld_get(strbld_t* bld, size_t index);
+
+/*
+  Get char by index in string builder with validate index.
+  Return char by index or '\0' in case of error.
+ */
+char strbld_get_s(strbld_t* bld, size_t index);
+
+/*
+  Find char in string builder.
+  Return index of found char or -1 in case of error.
+ */
+int strbld_find(strbld_t* bld, char to_find);
+
+/* 
+  Create new string builder with the start string.
+  Return new string builder pointer or NULL in case of error.
+ */
+strbld_t* strbld_from(char* str);
+
+/*
   Build string from string_builder.
   Return builded string pointer.
  */
@@ -53,6 +77,11 @@ bool strbld_insert(strbld_t *bldr, size_t index, char *target);
   Return is successful.
  */
 bool strbld_insertf(strbld_t* bldr, size_t index, char* format, ...);
+
+/*
+  Clear string builder.
+ */
+void strbld_clear(strbld_t* bld);
 
 /*
   Remove range string in string builder.

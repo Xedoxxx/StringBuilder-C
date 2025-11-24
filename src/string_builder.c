@@ -5,16 +5,63 @@
 
 strbld_t* strbld_new(size_t capacity) {
     char* string = malloc(capacity);
+    if(!string) {
+        fprintf(stderr, "strbld_new: Failed to allocate memory for string");
+        return NULL;
+    }
     string[0] = '\0';
     strbld_t* builder = malloc(sizeof(strbld_t));
     if(!builder) {
         fprintf(stderr, "strbld_new: Failed to allocate memory for string builder\n");
+        free(string);
         return NULL;
     }
     builder->string = string;
     builder->capacity = capacity;
     builder->len = 0;
     return builder;
+}
+
+strbld_t* strbld_from(char* str) {
+    size_t len = strlen(str);
+    char* string = malloc(len*2+1);
+    if(!string) {
+        fprintf(stderr, "strbld_new: Failed to allocate memory for string\n");
+        return NULL;
+    }
+    memcpy(string, str, len);
+    string[len] = '\0';
+    strbld_t* builder = malloc(sizeof(strbld_t));
+    if(!builder) {
+        fprintf(stderr, "strbld_new: Failed to allocate memory for string builder\n");
+        free(string);
+        return NULL;
+    }
+    builder->string = string;
+    builder->capacity = len*2;
+    builder->len = len;
+    return builder;
+}
+
+char strbld_get(strbld_t* bld, size_t index) {
+    return bld->string[index];
+}
+
+char strbld_get_s(strbld_t* bld, size_t index) {
+    if(index >= bld->len) {
+        fprintf(stderr, "strbld_get_s: Index out of bounds: %ld", index);
+    }
+    return strbld_get(bld, index);
+}
+
+int strbld_find(strbld_t* bld, char to_find) {
+    for(int i=0; i<bld->len; i++) {
+        char c = strbld_get(bld, i);
+        if(c == to_find) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 char* strbld_bld(strbld_t* bldr) {
@@ -59,6 +106,11 @@ bool strbld_insert(strbld_t* bldr, size_t index, char* target) {
     bldr->len += target_len;
     bldr->string[bldr->len] = '\0';
     return true;
+}
+
+void strbld_clear(strbld_t* bld) {
+    bld->len = 0;
+    bld->string[0] = '\0';
 }
 
 bool strbld_append(strbld_t* bld, char* target) {
