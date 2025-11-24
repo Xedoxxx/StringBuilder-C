@@ -1,109 +1,109 @@
 #ifndef STRING_BUILDER_H
 #define STRING_BUILDER_H
 
-#include <stddef.h>
-#include <stdbool.h>
 #include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 /* struct for build strings */
-typedef struct strbld_t {
-    char* string;
-    size_t capacity;
-    size_t len;
-} strbld_t;
+typedef struct string_t {
+  char *string;
+  size_t capacity;
+  size_t len;
+} str_t;
 
-/* 
+/*
   Create new string builder.
   Return new string builder pointer or NULL in case of error.
  */
-strbld_t *strbld_new(size_t capacity);
+string_t *str_new(size_t capacity);
 
 /*
   Get char by index in string builder.
   Return char by index.
  */
-char strbld_get(strbld_t* bld, size_t index);
+char str_get(string_t *bld, size_t index);
 
 /*
   Get char by index in string builder with validate index.
   Return char by index or '\0' in case of error.
  */
-char strbld_get_s(strbld_t* bld, size_t index);
+char str_get_s(string_t *bld, size_t index);
 
 /*
   Find char in string builder.
   Return index of found char or -1 in case of error.
  */
-int strbld_find(strbld_t* bld, char to_find);
+int str_find(string_t *bld, char to_find);
 
-/* 
+/*
   Create new string builder with the start string.
   Return new string builder pointer or NULL in case of error.
  */
-strbld_t* strbld_from(char* str);
+string_t *str_from(char *str);
 
 /*
   Build string from string_builder.
   Return builded string pointer.
  */
-char *strbld_bld(strbld_t *bldr);
+char *str_bld(string_t *bldr);
 
-/* 
+/*
   Append string to back of strbld.
   Return is successful.
  */
-bool strbld_append(strbld_t* bld, char* target);
+bool str_append(string_t *bld, char *target);
 
-/* 
+/*
   Append string to back of strbld.
   Return is successful.
  */
-bool strbld_appendf(strbld_t* bld, char* format, ...);
+bool str_appendf(string_t *bld, char *format, ...);
 
-/* 
-  Append char to back of strbld_t.
+/*
+  Append char to back of string_t.
   Return is successful.
  */
-bool strbld_push(strbld_t* bld, char target);
+bool str_push(string_t *bld, char target);
 
 /*
   Insert string to string builder with index.
   Return is successful.
  */
-bool strbld_insert(strbld_t *bldr, size_t index, char *target);
+bool str_insert(string_t *bldr, size_t index, char *target);
 
 /*
   Insert string to string builder with index and format.
   Return is successful.
  */
-bool strbld_insertf(strbld_t* bldr, size_t index, char* format, ...);
+bool str_insertf(string_t *bldr, size_t index, char *format, ...);
 
 /*
   Clear string builder.
  */
-void strbld_clear(strbld_t* bld);
+void str_clear(string_t *bld);
 
 /*
   Remove range string in string builder.
   Return is successful.
  */
-bool strbld_rm_range(strbld_t *bldr, size_t from, size_t to);
+bool str_rm_range(string_t *bldr, size_t from, size_t to);
 
 /*
   Remove single char in string builder.
   Return is successful.
  */
-bool strbld_rm(strbld_t *bldr, size_t position);
+bool str_rm(string_t *bldr, size_t position);
 
 /*
   Substring.
   Return selected string or NULL in case of error.
  */
-char* strbld_subs(strbld_t* bldr, size_t start, size_t end);
+char *str_subs(string_t *bldr, size_t start, size_t end);
 
 /*
   Free string builder and inside string.
  */
-void strbld_free(strbld_t *bldr);
+void str_free(string_t *bldr);
 
 #endif
