@@ -1,7 +1,5 @@
 # StringBuilder-C
 
-> Project using only for learning CMake and C programming language.
-
 StringBuilder implementation on C.
 
 # Testing
